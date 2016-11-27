@@ -29,9 +29,9 @@ GLFWwindow* window;
 #include "common/texture.hpp"
 
 int main( void ) {
-//    VideoCapture capture(0);
+   VideoCapture capture(0);
 //    VideoCapture capture("video.mp4");
-    VideoCapture capture("../dejavu.mp4");
+    // VideoCapture capture("../dejavu.mp4");
     if (!capture.isOpened()) {
         cerr << "Failed to open the video device, video file or image sequence!\n" << endl;
         return 0;
@@ -93,11 +93,11 @@ int main( void ) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     // 一度ダミーでテクスチャーをつくっておく（あとでビデオ映像で更新する）
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, NULL);
     glGenerateMipmap(GL_TEXTURE_2D);
-    
+
     // Get a handle for our "myTextureSampler" uniform
     GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
 
@@ -106,7 +106,7 @@ int main( void ) {
     GLfloat ox = 0.2;  // 画像をゆがめる例(0.0で正常になる)
     static const GLfloat g_vertex_buffer_data[] = {
         -1.0, -1.0, 0.0,
-        0.0,  -1.0, 0.0, 
+        0.0,  -1.0, 0.0,
         ox,   0.0, 0.0,
 
         -1.0, -1.0, 0.0,
@@ -122,7 +122,7 @@ int main( void ) {
         -1.0, 1.0, 0.0,
 
         0.0, -1.0, 0.0,
-        1.0, -1.0, 0.0, 
+        1.0, -1.0, 0.0,
         1.0, 0.0, 0.0,
 
         0.0, -1.0, 0.0,
@@ -130,7 +130,7 @@ int main( void ) {
         ox, 0.0, 0.0,
 
         ox, 0.0, 0.0,
-        1.0, 0.0, 0.0, 
+        1.0, 0.0, 0.0,
         1.0, 1.0, 0.0,
 
         ox, 0.0, 0.0,
@@ -187,12 +187,12 @@ int main( void ) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
 
     startFPS();
-    
+
     do{
         tickFPS();
-        
+
         Mat frame;
-        
+
         capture >> frame;
         if (frame.empty()) {  // auto rewind -- movie file playback only
             capture.set(CV_CAP_PROP_POS_FRAMES, 0);
@@ -202,7 +202,7 @@ int main( void ) {
         glBindTexture(GL_TEXTURE_RECTANGLE, Texture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, frame.data);
         glGenerateMipmap(GL_TEXTURE_2D);
-        
+
         // Clear the screen
         glClear( GL_COLOR_BUFFER_BIT );
 
@@ -219,7 +219,7 @@ int main( void ) {
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
         glVertexAttribPointer(
-            0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader. 
+            0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
             3,                  // size  was 3
             GL_FLOAT,           // type
             GL_FALSE,           // normalized?
@@ -238,7 +238,7 @@ int main( void ) {
             0,                                // stride
             (void*)0                          // array buffer offset
             );
-        
+
 
         // Draw the triangles !
         glDrawArrays(GL_TRIANGLES, 0, ntriangles*3); // 4 indices starting at 0 -> 1 rectangle
