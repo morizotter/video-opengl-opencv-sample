@@ -16,7 +16,7 @@ include_directories(${GLEW_INCLUDE_DIRS})
 
 link_directories(${GLEW}/lib ${GLFW}/lib)
 #include_directories(${GLEW}/include ${GLFW}/include)
-include_directories(/usr/local/Cellar/glfw3/3.1.2/include/GLFW/)
+include_directories(/usr/local/Cellar/glfw3/3.2.1/include/GLFW/)
 include_directories(/usr/include/GLFW/)
 
 link_directories(/usr/local/lib)
@@ -68,7 +68,7 @@ target_link_libraries(video3 ${OpenCV_LIBS} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} 
 
 
 # video4
-add_executable(video4 video4.cpp VideoTexture.cpp fps.cpp 
+add_executable(video4 video4.cpp VideoTexture.cpp fps.cpp
 	common/shader.cpp
 	common/shader.hpp
 	common/texture.cpp
@@ -80,7 +80,7 @@ add_executable(video4 video4.cpp VideoTexture.cpp fps.cpp
 target_link_libraries(video4 ${OpenCV_LIBS} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${ALL_LIBS})
 
 # video5
-add_executable(video5 video5.cpp VideoTexture.cpp fps.cpp 
+add_executable(video5 video5.cpp VideoTexture.cpp fps.cpp
 	common/shader.cpp
 	common/shader.hpp
 	common/texture.cpp
@@ -93,7 +93,7 @@ target_link_libraries(video5 ${OpenCV_LIBS} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} 
 
 
 # video6
-add_executable(video6 video6.cpp VideoTexture.cpp fps.cpp 
+add_executable(video6 video6.cpp VideoTexture.cpp fps.cpp
 	common/shader.cpp
 	common/shader.hpp
 	common/texture.cpp
@@ -103,6 +103,3 @@ add_executable(video6 video6.cpp VideoTexture.cpp fps.cpp
 	simple.vert
 )
 target_link_libraries(video6 ${OpenCV_LIBS} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${ALL_LIBS})
-
-
-

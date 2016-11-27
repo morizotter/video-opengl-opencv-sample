@@ -48,8 +48,8 @@ void vbo_initialize(GLuint &vao, GLuint &vbo) {
 
 	// Allocate space and upload the data from CPU to GPU
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_position), vertices_position, GL_STATIC_DRAW);	
-	glBufferData(GL_ARRAY_BUFFER, NSEG * 2 * sizeof(GLfloat), 0, GL_DYNAMIC_DRAW);	
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_position), vertices_position, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, NSEG * 2 * sizeof(GLfloat), 0, GL_DYNAMIC_DRAW);
 
     GLuint shaderProgram = LoadShaders( "../line.vert", "../line.frag" );
 
@@ -85,7 +85,7 @@ static void onKey(GLFWwindow *win, int key, int scancode, int action, int mods) 
             }
             vtex1.showParams();
             break;
-            
+
         case GLFW_KEY_D:
             vtex1.debug = !vtex1.debug;
             break;
@@ -114,7 +114,7 @@ static void onKey(GLFWwindow *win, int key, int scancode, int action, int mods) 
             cout << "delte " << npoints << endl;
             break;
 
-            // morph weight constants    
+            // morph weight constants
         case GLFW_KEY_A:
             vtex1.param[0] *= (GLFW_MOD_SHIFT & mods) ? 1.1 : (1.0/1.1);
             vtex1.showParams();
@@ -179,7 +179,7 @@ int main( void ) {
         return -1;
     }
     glfwMakeContextCurrent(window);
-    
+
     glfwSetKeyCallback(window, onKey);
     glfwSetMouseButtonCallback(window, onMouseButton);
 
@@ -203,7 +203,7 @@ int main( void ) {
     // background face texture (static image)
     Mat face_image = imread("../face-texture.jpg", CV_LOAD_IMAGE_COLOR);
     vtex0.init(programID, false, 0, face_image);        // static image texture
-    
+
     // video テクスチャを準備する
     VideoCapture capture1("../IMG_6155.MOV");
     if (!capture1.isOpened()) {
@@ -215,18 +215,18 @@ int main( void ) {
 
     GLuint vao, vbo;  // display line segments for morphing debug
     vbo_initialize(vao, vbo);
-    
+
     // ブレンドを有効にする  to enable alpha values in shaders
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
+
     startFPS();
     do{
         tickFPS();
 
         // Get next video frames
         vtex1.nextFrame();
-        
+
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT);
 
