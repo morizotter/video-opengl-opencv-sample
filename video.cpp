@@ -29,9 +29,9 @@ GLFWwindow* window;
 #include "common/texture.hpp"
 
 int main( void ) {
-//    VideoCapture capture(0);
+   VideoCapture capture(0);
 //    VideoCapture capture("video.mp4");
-    VideoCapture capture("../dejavu.mp4");
+    // VideoCapture capture("../dejavu.mp4");
     if (!capture.isOpened()) {
         cerr << "Failed to open the video device, video file or image sequence!\n" << endl;
         return 0;
@@ -97,11 +97,11 @@ int main( void ) {
     // 一度ダミーでテクスチャーをつくっておく（あとでビデオ映像で更新する）
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, 0);
     glGenerateMipmap(GL_TEXTURE_2D);
-    
+
     // Get a handle for our "myTextureSampler" uniform
     GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
 
-    static const GLfloat g_vertex_buffer_data[] = { 
+    static const GLfloat g_vertex_buffer_data[] = {
         -1.0f, -1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
         1.0f,  1.0f, 0.0f,
@@ -127,12 +127,12 @@ int main( void ) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
 
     startFPS();
-    
+
     do{
         tickFPS();
-        
+
         Mat frame;
-        
+
         capture >> frame;
         if (frame.empty()) {  // auto rewind -- movie file playback only
             capture.set(CV_CAP_PROP_POS_FRAMES, 0);
@@ -142,7 +142,7 @@ int main( void ) {
         glBindTexture(GL_TEXTURE_RECTANGLE, Texture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, frame.data);
         glGenerateMipmap(GL_TEXTURE_2D);
-        
+
         // Clear the screen
         glClear( GL_COLOR_BUFFER_BIT );
 
@@ -160,7 +160,7 @@ int main( void ) {
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
         glVertexAttribPointer(
-            0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader. 
+            0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
             3,                  // size  was 3
             GL_FLOAT,           // type
             GL_FALSE,           // normalized?
@@ -179,7 +179,7 @@ int main( void ) {
             0,                                // stride
             (void*)0                          // array buffer offset
             );
-        
+
 
         // Draw the triangle !
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4); // 4 indices starting at 0 -> 1 rectangle
